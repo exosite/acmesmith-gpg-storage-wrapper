@@ -1,11 +1,11 @@
 
 lib = File.expand_path("../lib", __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require "acmesmith/gpg-storage-wrapper/version"
+require "acmesmith-gpg-storage-wrapper/version"
 
 Gem::Specification.new do |spec|
   spec.name          = "acmesmith-gpg-storage-wrapper"
-  spec.version       = Acmesmith::Storage::GpgStorageWrapper::VERSION
+  spec.version       = AcmesmithGpgStorageWrapper::VERSION
   spec.authors       = ["John Lin"]
   spec.email         = ["johnlin@exosite.com"]
 

@@ -1,6 +1,9 @@
+require 'acmesmith-gpg-storage-wrapper/version'
+require 'acmesmith/storages/base'
+require 'acmesmith/storages'
 module Acmesmith
   module Storages
-    module GpgStorageWrapper < Base
+    class GpgStorageWrapper < Base
 
       def initialize(reciptents: nil, storage: nil, **kwargs)
         @wrappedStorage = ::Acmesmith::Storages.find(storage)
