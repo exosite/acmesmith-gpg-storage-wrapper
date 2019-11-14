@@ -1,9 +1,7 @@
 module Acmesmith
-  module Gpg
-    module Storage
-      module Wrapper
-        VERSION = "0.1.0"
-      end
+  module Storage
+    module GpgStorageWrapper
+      VERSION = "0.1.0"
     end
   end
 end

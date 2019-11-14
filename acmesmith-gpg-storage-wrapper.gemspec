@@ -5,7 +5,7 @@ require "acmesmith/gpg-storage-wrapper/version"
 
 Gem::Specification.new do |spec|
   spec.name          = "acmesmith-gpg-storage-wrapper"
-  spec.version       = Acmesmith::Gpg::Storage::Wrapper::VERSION
+  spec.version       = Acmesmith::Storage::GpgStorageWrapper::VERSION
   spec.authors       = ["John Lin"]
   spec.email         = ["johnlin@exosite.com"]
 
