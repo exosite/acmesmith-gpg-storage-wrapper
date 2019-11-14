@@ -5,6 +5,9 @@ class AcmesmithGpgStorageWrapperTest < Minitest::Test
     refute_nil ::AcmesmithGpgStorageWrapper::VERSION
   end
 
+  def test_it_can_encrypt_then_decrypt_data
+  end
+
   def test_it_does_something_useful
     assert true
   end

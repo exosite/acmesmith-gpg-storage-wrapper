@@ -1,12 +1,15 @@
 require 'acmesmith-gpg-storage-wrapper/version'
 require 'acmesmith/storages/base'
 require 'acmesmith/storages'
+require 'gpgme'
 module Acmesmith
   module Storages
     class GpgStorageWrapper < Base
 
       def initialize(reciptents: nil, storage: nil, **kwargs)
         @wrappedStorage = ::Acmesmith::Storages.find(storage)
+        @crypto = ::GPGME::Ctypro.new
+        @crypto_opt = {recipients: recipients}
       end
 
       def get_account_key
