@@ -1,4 +1,4 @@
-require "acmesmith/gpg/storage/wrapper/version"
+require "acmesmith/gpg-storage-wrapper/version"
 
 module Acmesmith
   module Gpg
