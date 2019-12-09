@@ -27,6 +27,7 @@ module Acmesmith
 
     class AccountKeyGPGWrapper < AccountKey
       def self.setup(engine)
+        Acmesmith.send(:remove_const, :AccountKey) if Acmesmith.const_defined?(:AccountKey)
         Acmesmith.const_set(:AccountKey, self)
         @@engine = engine
       end
@@ -46,6 +47,15 @@ module Acmesmith
         else
           super
         end
+      end
+
+      def export(passphrase, cipher:  OpenSSL::Cipher.new('aes-256-cbc'))
+        if passphrase
+          plaintext = private_key.export(cipher, passphrase)
+        else
+          plaintext = private_key.export
+        end
+        @@engine.encrypt(plaintext)
       end
 
     end
