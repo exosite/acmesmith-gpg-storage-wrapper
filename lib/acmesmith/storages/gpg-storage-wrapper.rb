@@ -1,15 +1,62 @@
 require 'acmesmith-gpg-storage-wrapper/version'
 require 'acmesmith/storages/base'
 require 'acmesmith/storages'
+require 'acmesmith/account_key'
 require 'gpgme'
 module Acmesmith
   module Storages
-    class GpgStorageWrapper < Base
 
-      def initialize(reciptents: nil, storage: nil, **kwargs)
-        @wrappedStorage = ::Acmesmith::Storages.find(storage)
-        @crypto = ::GPGME::Ctypro.new
+    class GPGEngine
+
+      def initialize(recipients: nil)
+        @crypto = ::GPGME::Crypto.new
         @crypto_opt = {recipients: recipients}
+      end
+
+      def encrypt(plaintext)
+        data = ::GPGME::Data.new(plaintext)
+        @crypto.encrypt(data, @crypto_opt).to_s
+      end
+
+      def decrypt(ciphertext)
+        data = ::GPGME::Data.new(ciphertext)
+        @crypto.decrypt(data, @crypto_opt).to_s
+      end
+
+    end
+
+    class AccountKeyGPGWrapper < AccountKey
+      def self.setup(engine)
+        Acmesmith.const_set(:AccountKey, self)
+        @@engine = engine
+      end
+
+      def initialize(private_key, passphrase = nil)
+        case private_key
+        when String
+          begin
+          decrypted_key = @@engine.decrypt(private_key)
+          rescue GPGME::Error::NoData
+            super(private_key, passphrase)
+          else
+            super(decrypted_key, passphrase)
+          end
+        when ::OpenSSL::PKey
+          super
+        else
+          super
+        end
+      end
+
+    end
+
+    class GpgStorageWrapper < Base
+      attr_reader :storage, :engine
+
+      def initialize(recipients: nil, storage: nil, **kwargs)
+        wrappedStorageKlass = ::Acmesmith::Storages.find(storage)
+        @storage = wrappedStorageKlass.new(**kwargs)
+        @engine = GPGEngine.new(recipients: recipients)
       end
 
       def get_account_key
