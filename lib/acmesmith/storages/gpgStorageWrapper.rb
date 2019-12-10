@@ -107,11 +107,11 @@ module Acmesmith
       end
 
       def put_certificate(cert, passphrase = nil, update_current: true)
-        @storage.put_certificate(cert, passphrase, update_current)
+        @storage.put_certificate(cert, passphrase, update_current: update_current)
       end
 
       def get_certificate(common_name, version: 'current')
-        @storage.get_certificate(common_name, version)
+        @storage.get_certificate(common_name, version: version)
       end
 
       def list_certificates
