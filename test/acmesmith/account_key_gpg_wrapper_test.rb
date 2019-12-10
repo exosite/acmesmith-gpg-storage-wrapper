@@ -1,6 +1,6 @@
 require "test_helper"
 require "acmesmith/storages/filesystem"
-require "acmesmith/storages/gpg-storage-wrapper"
+require "acmesmith/storages/gpgStorageWrapper"
 require "acmesmith/account_key"
 
 class AccountKeyGPGWrapperTest < Minitest::Test

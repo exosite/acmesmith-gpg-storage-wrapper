@@ -1,5 +1,5 @@
 $LOAD_PATH.unshift File.expand_path("../../lib", __FILE__)
-require "acmesmith/storages/gpg-storage-wrapper"
+require "acmesmith/storages/gpgStorageWrapper"
 
 require "minitest/autorun"
 require "minitest/mock"
