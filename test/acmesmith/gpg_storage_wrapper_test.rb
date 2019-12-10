@@ -21,4 +21,14 @@ class AcmesmithGpgStorageWrapperTest < Minitest::Test
     assert wrapper.engine.decrypt(wrapper.engine.encrypt(data)).to_s == data
   end
 
+  def test_it_can_read_and_write_account_key
+    path = "./test/tmp/storage"
+    wrapper = Acmesmith::Storages::GpgStorageWrapper.new(recipients:["DDA11728"], storage: "filesystem", path: path)
+    account_key = Acmesmith::AccountKey.generate
+    wrapper.put_account_key(account_key)
+    fetched_key = wrapper.get_account_key
+    assert account_key.private_key.export == fetched_key.private_key.export
+    FileUtils.rm "#{path}/account.pem"
+  end
+
 end

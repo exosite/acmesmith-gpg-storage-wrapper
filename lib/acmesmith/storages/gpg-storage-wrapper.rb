@@ -67,14 +67,15 @@ module Acmesmith
         wrappedStorageKlass = ::Acmesmith::Storages.find(storage)
         @storage = wrappedStorageKlass.new(**kwargs)
         @engine = GPGEngine.new(recipients: recipients)
+        AccountKeyGPGWrapper.setup(@engine)
       end
 
       def get_account_key
-        raise NotImplementedError
+        @storage.get_account_key
       end
 
       def put_account_key(key, passphrase = nil)
-        raise NotImplementedError
+        @storage.put_account_key(key, passphrase)
       end
 
       def put_certificate(cert, passphrase = nil, update_current: true)
