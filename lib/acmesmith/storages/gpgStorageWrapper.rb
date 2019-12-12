@@ -10,7 +10,7 @@ module Acmesmith
     class GPGEngine
 
       def initialize(recipients: nil)
-        @crypto = ::GPGME::Crypto.new
+        @crypto = ::GPGME::Crypto.new(always_trust: true)
         @crypto_opt = {recipients: recipients}
       end
 
